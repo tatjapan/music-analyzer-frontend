@@ -1,7 +1,8 @@
 'use client';
 
-import { useEffect, useRef, useReducer } from "react";
+import { useEffect, useRef, useReducer, useState } from "react";
 import { useRecordState, AnalyzeResult } from "@/hooks/useRecordState";
+import UsageNoticeModal from "./UsageNoticeModal";
 
 // ブラウザAPIの結果をUIコンポーネント側で管理（マイク許可状態）
 // この状態以外は 代入時に型エラーになる。マイク未確認|マイク確認|マイク拒否
@@ -16,6 +17,8 @@ export default function RecordButton() {
     // 画面には表示されないけど裏で覚えておきたい値（再レンダリング不要）をuseRefで保持
     const mediaRecorderRef = useRef<MediaRecorder | null>(null);
     const chunksRef = useRef<Blob[]>([]);
+    // モーダルウィンドウ用
+    const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
         if (
@@ -84,7 +87,13 @@ export default function RecordButton() {
             <button
                 onClick={handleRecord}
                 disabled={state.status === "recording" || state.status === "loading"}
-                className={`w-4/5 sm:w-48 sm:h-48 aspect-square rounded-full bg-gradient-to-br from-indigo-500 to-blue-600 shadow-2xl text-white text-lg sm:text-2xl font-bold flex items-center justify-center hover:scale-105 transition
+                className={`w-64 h-64 sm:w-72 sm:h-72
+                        rounded-full
+                        bg-gradient-to-br from-indigo-500 to-blue-600
+                        shadow-2xl
+                        text-white text-2xl sm:text-3xl font-bold
+                        flex items-center justify-center
+                        hover:scale-105 transition
                      ${state.status === "recording" || state.status === "loading"
                         ? "opacity-50 cursor-not-allowed"
                         : ""
@@ -120,6 +129,16 @@ export default function RecordButton() {
                     </button>
                 </div>
             )}
+            <>
+                <button
+                    onClick={() => setShowModal(true)}
+                    className="mt-4 text-sm text-gray-600 underline"
+                >
+                    利用上の注意
+                </button>
+
+                {showModal && <UsageNoticeModal onClose={() => setShowModal(false)} />}
+            </>
         </div>
     )
 }
