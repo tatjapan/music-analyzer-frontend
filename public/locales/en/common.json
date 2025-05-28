@@ -1,0 +1,19 @@
+{
+    "start_analysis": "Start Analysis",
+    "analyzing": "Analyzing...",
+    "analyzing_wait": "🎧 Analyzing... Please wait a moment",
+    "microphone_denied": "Microphone access is denied",
+    "analysis_result": "Analysis Result",
+    "bpm": "BPM",
+    "key": "Key",
+    "camelot": "Camelot",
+    "back_to_top": "Back to Top",
+    "usage_notice": "Usage Notice",
+    "usage_modal_title": "Usage Notice",
+    "usage_modal_1": "Recording lasts up to 10 seconds.",
+    "usage_modal_2": "Accuracy may vary depending on noise, timing, and music quality.",
+    "usage_modal_3": "Audio data is immediately discarded after analysis and not stored.",
+    "usage_modal_4": "To prevent abuse, access may be temporarily limited if traffic spikes.",
+    "close": "Close",
+    "analysis_failed": "Analysis failed. Please try again."
+}

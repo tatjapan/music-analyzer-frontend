@@ -1,0 +1,19 @@
+{
+    "start_analysis": "解析開始",
+    "analyzing": "解析中...",
+    "analyzing_wait": "🎧 解析中...しばらくお待ちください",
+    "microphone_denied": "マイクの使用が許可されていません",
+    "analysis_result": "解析結果",
+    "bpm": "BPM",
+    "key": "Key",
+    "camelot": "Camelot",
+    "back_to_top": "トップに戻る",
+    "usage_notice": "利用上の注意",
+    "usage_modal_title": "利用上の注意",
+    "usage_modal_1": "録音は最大10秒間実行されます。",
+    "usage_modal_2": "周囲のノイズや解析箇所、音楽の品質によって、解析結果の精度が変動します。",
+    "usage_modal_3": "録音データは解析後すぐに破棄され、保存されません。",
+    "usage_modal_4": "不正アクセス防止のため、短期間にアクセスが集中するとアプリ利用が制限されます。",
+    "close": "閉じる",
+    "analysis_failed": "解析に失敗しました。もう一度お試しください。"
+}
