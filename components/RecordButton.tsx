@@ -3,12 +3,14 @@
 import { useEffect, useRef, useReducer, useState } from "react";
 import { useRecordState, AnalyzeResult } from "@/hooks/useRecordState";
 import UsageNoticeModal from "./UsageNoticeModal";
+import { useTranslation } from 'react-i18next';
 
 // ブラウザAPIの結果をUIコンポーネント側で管理（マイク許可状態）
 // この状態以外は 代入時に型エラーになる。マイク未確認|マイク確認|マイク拒否
 type MicPermission = "idle" | "granted" | "denied";
 
 export default function RecordButton() {
+    const { t } = useTranslation();
     const [state, dispatch] = useRecordState();
     const [permission, setPermission] = useReducer(
         (_: MicPermission, granted: MicPermission) => granted, "idle"
@@ -34,7 +36,7 @@ export default function RecordButton() {
 
     const handleRecord = async () => {
         if (permission !== "granted") {
-            alert("マイクの使用が許可されていません");
+            alert(t('microphone_denied'));
             return;
         }
 
@@ -72,7 +74,7 @@ export default function RecordButton() {
             } catch (error) {
                 dispatch({
                     type: "error",
-                    message: "解析に失敗しました。もう一度お試しください。",
+                    message: t('analysis_failed'),
                 });
             }
             stream.getTracks().forEach((track) => track.stop());
@@ -99,15 +101,15 @@ export default function RecordButton() {
                         : ""
                     }`}
             >
-                {state.status === "recording" || state.status === "loading" ? "解析中..." : "解析開始"}
+                {state.status === "recording" || state.status === "loading" ? t('analyzing') : t('start_analysis')}
             </button>
             {permission === "denied" && (
-                <p className="text-red-600 font-semibold">マイクの使用が許可されていません</p>
+                <p className="text-red-600 font-semibold">{t('microphone_denied')}</p>
             )}
 
             {state.status === "loading" && (
                 <p className="text-gray-700 animate-pulse font-medium">
-                    🎧 解析中...しばらくお待ちください
+                    {t('analyzing_wait')}
                 </p>
             )}
 
@@ -117,7 +119,7 @@ export default function RecordButton() {
 
             {state.status === "success" && (
                 <div className="w-full max-w-md bg-white p-6 rounded-lg shadow-md text-gray-900 px-4">
-                    <h2 className="text-xl text-center font-bold mb-2">解析結果</h2>
+                    <h2 className="text-xl text-center font-bold mb-2">{t('analysis_result')}</h2>
                     <p className="text-black"><strong>BPM:</strong> <span className="font-mono">{state.result.bpm}</span></p>
                     <p className="text-black"><strong>Key:</strong> <span className="font-mono">{state.result.key}</span></p>
                     <p className="text-black"><strong>Camelot:</strong> <span className="font-mono"> {state.result.camelot}</span></p>
@@ -125,7 +127,7 @@ export default function RecordButton() {
                         onClick={() => dispatch({ type: "reset" })}
                         className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
                     >
-                        トップに戻る
+                        {t('back_to_top')}
                     </button>
                 </div>
             )}
@@ -134,7 +136,7 @@ export default function RecordButton() {
                     onClick={() => setShowModal(true)}
                     className="mt-4 text-sm text-gray-600 underline"
                 >
-                    利用上の注意
+                    {t('usage_notice')}
                 </button>
 
                 {showModal && <UsageNoticeModal onClose={() => setShowModal(false)} />}
